@@ -9,7 +9,7 @@ from django.utils import timezone
 
 class Topic(models.Model):
     name = models.CharField(max_length=200)
-    category = models.CharField(max_length=200, blank=False, null=False)
+    category = models.CharField(max_length=200, null=True)
 
 
 class Course(models.Model):
@@ -18,7 +18,6 @@ class Course(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     for_everyone = models.BooleanField(default=True)
     description = models.TextField(max_length=300, null=True, blank=True)
-
 
 
 class Student(User):
@@ -30,6 +29,7 @@ class Student(User):
     city = models.CharField(max_length=2, choices=CITY_CHOICES, default='WS')
     interested_in = models.ManyToManyField(Topic)
 
+
 class Order(models.Model):
     ORDER_STATUS_CHOICES = [(0, 'Cancelled'), (1, 'Order Confirmed')]
     course = models.ManyToManyField(Course)
@@ -37,6 +37,7 @@ class Order(models.Model):
     levels = models.PositiveIntegerField(default=0)
     order_status = models.IntegerField(choices=ORDER_STATUS_CHOICES, default=1)
     order_date = models.DateField(auto_now_add=True, editable=False)
+
 
 
 
