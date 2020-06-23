@@ -1,3 +1,4 @@
+.idea
 /mysiteS20/.idea
 /mysiteS20/venv
-/mysiteS20/mysite/db
+/mysiteS20/db.sqlite3
