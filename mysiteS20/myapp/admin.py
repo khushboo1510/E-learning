@@ -1,9 +1,9 @@
 
 from django.contrib import admin
 from .models import Topic, Course, Student, Order
+from import_export.admin import ImportExportModelAdmin
 
 # Register your models here.
-admin.site.register(Topic)
-admin.site.register(Course)
-admin.site.register(Student)
-admin.site.register(Order)
+@admin.register(Topic, Course, Student, Order)
+class PersonAdmin(ImportExportModelAdmin):
+    pass
