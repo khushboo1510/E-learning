@@ -13,7 +13,7 @@ class Topic(models.Model):
 
     def __str__(self):
         return '{ Name: ' + self.name + \
-               '- Category: ' + self.category + ' }'
+               '; Category: ' + self.category + ' }'
 
 
 class Course(models.Model):
@@ -25,10 +25,10 @@ class Course(models.Model):
 
     def __str__(self):
         return '{ Name: ' + self.name + \
-               '- Price: ' + str(self.price) + \
-               '- For Everyone: ' + str(self.for_everyone) + \
-               '- Topic: ' + self.topic.name + \
-               '- Description: ' + (self.description or 'NA') + '} '
+               '; Price: ' + str(self.price) + \
+               '; For Everyone: ' + str(self.for_everyone) + \
+               '; Topic: ' + self.topic.name + \
+               '; Description: ' + (self.description or 'NA') + '} '
 
 
 class Student(User):
@@ -42,9 +42,9 @@ class Student(User):
 
     def __str__(self):
         return '{ Name: ' + self.first_name + ' ' + self.last_name + \
-               '- School: ' + self.school + \
-               '- City: ' + self.city + \
-               '- Interested in: ' + str(self.interested_in.values_list('name')) + '} '
+               '; School: ' + self.school + \
+               '; City: ' + self.city + \
+               '; Interested in: ' + str(self.interested_in.values_list('name')) + '} '
 
 
 class Order(models.Model):
@@ -60,9 +60,9 @@ class Order(models.Model):
     
     def __str__(self):
         return '{ Student: ' + str(self.student.first_name + ' ' + self.student.last_name) + \
-               '- Courses: ' + str(self.course.values_list('name')) + \
-               '- Levels: ' + str(self.levels) + \
-               '- Order Status: ' + str(self.order_status) + \
-               '- Order Date: ' + str(self.order_date) + '}'
+               '; Courses: ' + str(self.course.values_list('name')) + \
+               '; Levels: ' + str(self.levels) + \
+               '; Order Status: ' + str(self.order_status) + \
+               '; Order Date: ' + str(self.order_date) + '}'
 
 
