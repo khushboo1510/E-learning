@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from django.http import HttpResponse
 from .models import Topic, Course, Student, Order
@@ -31,13 +31,16 @@ def about(request):
 def detail(request, top_no):
     top_details = Topic.objects.filter(pk=top_no)
     response = HttpResponse()
-    for topic in top_details:
-        course_list = Course.objects.filter(topic__name=topic.name)
-        para1 = '<p>' + 'Category' + ': ' + str(topic.category)
-        response.write(para1)
-        para2 = '<p>' + 'Course List' + ':'
-        response.write(para2)
-        for course in course_list:
-            para = '<p>' + str(course) + '</p>'
-            response.write(para)
+    if top_details:
+        for topic in top_details:
+            course_list = Course.objects.filter(topic__name=topic.name)
+            para1 = '<p>' + 'Category' + ': ' + str(topic.category)
+            response.write(para1)
+            para2 = '<p>' + 'Course List' + ':'
+            response.write(para2)
+            for course in course_list:
+                para = '<p>' + str(course) + '</p>'
+                response.write(para)
+    else:
+        get_object_or_404(Topic, pk=top_no)
     return response
