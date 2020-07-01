@@ -26,3 +26,18 @@ def about(request):
     para = '<p>' + 'This is an E-learning Website! Search our Topics to find all available Courses.' + '</p>'
     response.write(para)
     return response
+
+
+def detail(request, top_no):
+    top_details = Topic.objects.filter(pk=top_no)
+    response = HttpResponse()
+    for topic in top_details:
+        course_list = Course.objects.filter(topic__name=topic.name)
+        para1 = '<p>' + 'Category' + ': ' + str(topic.category)
+        response.write(para1)
+        para2 = '<p>' + 'Course List' + ':'
+        response.write(para2)
+        for course in course_list:
+            para = '<p>' + str(course) + '</p>'
+            response.write(para)
+    return response
