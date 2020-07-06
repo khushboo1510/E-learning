@@ -44,3 +44,6 @@ def detail(request, top_no):
     else:
         get_object_or_404(Topic, pk=top_no)
     return response
+
+
+
