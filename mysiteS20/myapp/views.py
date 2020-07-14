@@ -12,10 +12,10 @@ def index(request):
 
 
 def about(request):
-    response = HttpResponse()
-    para = '<p>' + 'This is an E-learning Website! Search our Topics to find all available Courses.' + '</p>'
-    response.write(para)
-    return response
+    # response = HttpResponse()
+    # para = '<p>' + 'This is an E-learning Website! Search our Topics to find all available Courses.' + '</p>'
+    # response.write(para)
+    return render(request, "myapp/about0.html")
 
 
 def detail(request, top_no):
