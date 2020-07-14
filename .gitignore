@@ -1,4 +1,5 @@
 .idea
 /mysiteS20/.idea
 /mysiteS20/venv
+/mysiteS20/__pycache__/
 #/mysiteS20/db.sqlite3
