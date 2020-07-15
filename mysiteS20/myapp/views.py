@@ -19,21 +19,20 @@ def about(request):
 
 
 def detail(request, top_no):
-    top_details = Topic.objects.filter(pk=top_no)
-    response = HttpResponse()
-    if top_details:
-        for topic in top_details:
-            course_list = Course.objects.filter(topic__name=topic.name)
-            para1 = '<p>' + 'Category' + ': ' + str(topic.category)
-            response.write(para1)
-            para2 = '<p>' + 'Course List' + ':'
-            response.write(para2)
-            for course in course_list:
-                para = '<p>' + str(course) + '</p>'
-                response.write(para)
-    else:
-        get_object_or_404(Topic, pk=top_no)
-    return response
+    # response = HttpResponse()
+    # topic  = Topic.objects.get(id=top_no)
+    topic = get_object_or_404(Topic, id=top_no)  # Gives 404 if Topic not found
+    course_list = Course.objects.filter(topic__id=top_no)
+    # response.write(topic)
+    # response.write('<p>' + Course List: ' + '</p>')
+    # for course in Course.objects.filter(topic__id=top_no):
+    #     if course.for_everyone:
+    #         for_str = "This Course is For Everyone!"
+    #     else:
+    #         for_str = "This Course is not For Everyone!"
+    #     response.write('<p>' + str(course.id) + ': ' + str(course) + for_str + '</p>')
+    # return response
+    return render(request, "myapp/detail0.html", {'topic': topic, 'course_list': course_list})
 
 
 
