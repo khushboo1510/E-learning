@@ -1,0 +1,12 @@
+{% extends 'myapp/base.html' %}
+{% block title %}Detail{% endblock %}
+{% block body_block %}
+    <h2>Topic details: {{ topic.name }}</h2>
+    <p>Category: {{ topic.category }}</p>
+    <p>Course List: </p>
+    <ol>
+        {% for course in course_list %}
+            <li> {{ course.name }} - ${{ course.price }} </li>
+        {% endfor %}
+    </ol>
+{% endblock %}

@@ -8,14 +8,14 @@ from .models import Topic, Course, Student, Order
 def index(request):
     # top_list = Topic.objects.all().order_by('id')[:10]
     top_list = Topic.objects.all().order_by('id')[:10]
-    return render(request, "myapp/index0.html", {'top_list': top_list})
+    return render(request, "myapp/index.html", {'top_list': top_list})
 
 
 def about(request):
     # response = HttpResponse()
     # para = '<p>' + 'This is an E-learning Website! Search our Topics to find all available Courses.' + '</p>'
     # response.write(para)
-    return render(request, "myapp/about0.html")
+    return render(request, "myapp/about.html")
 
 
 def detail(request, top_no):
@@ -32,7 +32,7 @@ def detail(request, top_no):
     #         for_str = "This Course is not For Everyone!"
     #     response.write('<p>' + str(course.id) + ': ' + str(course) + for_str + '</p>')
     # return response
-    return render(request, "myapp/detail0.html", {'topic': topic, 'course_list': course_list})
+    return render(request, "myapp/detail.html", {'topic': topic, 'course_list': course_list})
 
 
 
