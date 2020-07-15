@@ -1,8 +1,6 @@
 {% extends 'myapp/base.html' %}
 {% block title %}Main{% endblock %}
-{% if top_list %}
-    {% block myhdg %}{{ request.user }}{% endblock %}
-{% endif %}
+{% block myhdg %}{{ request.user }}{% endblock %}
 {% block body_block %}
     {% if top_list %}
         <h2>List of Topics</h2>
