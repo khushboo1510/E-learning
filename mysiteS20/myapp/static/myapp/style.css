@@ -1,0 +1,16 @@
+.hbar1 {
+    display: inline;
+    margin: 15px;
+}
+
+body
+{
+    background-color: cadetblue;
+    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+    font-weight: bold;
+}
+
+h1 {
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+    display: inline-grid;
+}
