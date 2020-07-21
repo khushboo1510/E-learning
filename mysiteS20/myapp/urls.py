@@ -6,5 +6,6 @@ urlpatterns = [
     path(r'', views.index, name='index'),
     path(r'about/', views.about, name='about'),
     #path(r'detail/<int:top_no>', views.detail, name='detail'),
-    re_path(r'(?P<top_no>\d+)/', views.detail, {}, name='detail')
+    re_path(r'(?P<top_no>\d+)/', views.detail, {}, name='detail'),
+    path(r'courses/', views.courses, name='courses')
 ]
