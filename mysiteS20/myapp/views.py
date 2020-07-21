@@ -35,4 +35,8 @@ def detail(request, top_no):
     return render(request, "myapp/detail.html", {'topic': topic, 'course_list': course_list})
 
 
+def courses(request):
+    courselist = Course.objects.all().order_by('id')
+    return render(request, 'myapp/courses.html', {'courselist': courselist})
+
 
