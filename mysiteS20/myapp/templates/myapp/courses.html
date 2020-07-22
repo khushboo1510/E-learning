@@ -4,7 +4,7 @@
     {% if courselist %}
         <ol>
             {% for course in courselist %}
-                <li> {{ course.name }} </li>
+                <li><a href="{% url 'myapp:courses' %}{{ course.id }}">{{ course.name }} </a></li>
             {% endfor %}
         </ol>
     {% else %}

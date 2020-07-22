@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 
 from django.http import HttpResponse
 
-from myapp.forms import OrderForm
+from myapp.forms import OrderForm, InterestForm
 from .models import Topic, Course, Student, Order
 
 
@@ -65,3 +65,17 @@ def place_order(request):
         return render(request, 'myapp/placeorder.html', {'form': form, 'msg': msg, 'courselist': courselist})
 
 
+def coursedetail(request, course_id):
+    course = get_object_or_404(Course, pk=course_id)
+    if request.method == 'POST':
+        form = InterestForm(request.POST)
+        if form.is_valid():
+            # request.POST.get('interested') is '1'
+            if form.cleaned_data['interested'] == '1':
+                course.interested = course.interested + 1
+                course.save()
+            return index(request)
+    else:
+        # if a GET (or any other method) we'll create a blank form
+        form = InterestForm()
+    return render(request, 'myapp/coursedetail.html', {'form': form, 'course': course})
