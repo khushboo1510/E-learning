@@ -5,15 +5,15 @@ from myapp.models import Order
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = [
-            'student',
-            'course',
-            'levels',
-            'order_date'
-        ]
-
-    student = forms.RadioSelect()
-    order_date = forms.DateField(widget=forms.SelectDateWidget)
+        fields = ['student', 'course', 'levels', 'order_date']
+        widgets = {
+            'student': forms.RadioSelect,
+            'order_date': forms.SelectDateWidget(attrs={'class':'years=date.today()'}, empty_label=("Year", "Month", "Day"))
+        }
+        labels = {
+            'student': 'Student Name',
+            'order_date': 'Order Date'
+        }
 
 
 class InterestForm(forms.Form):

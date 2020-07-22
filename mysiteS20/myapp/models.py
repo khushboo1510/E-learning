@@ -26,7 +26,7 @@ class Course(models.Model):
     stages = models.PositiveIntegerField(default=3)
 
     def discount(self):
-        return self.price * 0.9
+        return float(self.price) * 0.9
 
     def __str__(self):
         return '{ Name: ' + self.name + \
@@ -54,18 +54,18 @@ class Student(User):
 
 class Order(models.Model):
     ORDER_STATUS_CHOICES = [(0, 'Cancelled'), (1, 'Order Confirmed')]
-    course = models.ManyToManyField(Course)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, related_name='student', on_delete=models.CASCADE, max_length=200)
     levels = models.PositiveIntegerField(default=0)
     order_status = models.IntegerField(choices=ORDER_STATUS_CHOICES, default=1)
-    order_date = models.DateField(auto_now_add=True, editable=False)
+    order_date = models.DateField(default=datetime.date.today)
 
     def total_cost(self):
         return sum(course.price for course in self.course.all())
-    
+
     def __str__(self):
-        return '{ Student: ' + str(self.student.first_name + ' ' + self.student.last_name) + \
-               '; Courses: ' + str(self.course.values_list('name')) + \
+        return '{ Student: ' + self.student.first_name + ' ' + self.student.last_name + \
+               '; Courses: ' + self.course.name + \
                '; Levels: ' + str(self.levels) + \
                '; Order Status: ' + str(self.order_status) + \
                '; Order Date: ' + str(self.order_date) + '}'

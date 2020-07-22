@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 
 from django.http import HttpResponse
+
+from myapp.forms import OrderForm
 from .models import Topic, Course, Student, Order
 
 
@@ -38,5 +40,28 @@ def detail(request, top_no):
 def courses(request):
     courselist = Course.objects.all().order_by('id')
     return render(request, 'myapp/courses.html', {'courselist': courselist})
+
+
+def place_order(request):
+    msg = ''
+    courselist = Course.objects.all()
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            print(order)
+            if order.levels <= order.course.stages:
+                form.save()
+                msg = 'Your course has been ordered successfully.'
+                if float(order.course.price) > 150:
+                    order.course.discounted_price = Course.discount(order.course)
+                    order.course.save()
+                    msg = msg + 'Price for order updated to $' + str(order.course.discounted_price)
+            else:
+                msg = 'You exceeded the number of levels for this course.'
+            return render(request, 'myapp/order_response.html', {'msg': msg})
+    else:
+        form = OrderForm()
+        return render(request, 'myapp/placeorder.html', {'form': form, 'msg': msg, 'courselist': courselist})
 
 

@@ -7,5 +7,7 @@ urlpatterns = [
     path(r'about/', views.about, name='about'),
     #path(r'detail/<int:top_no>', views.detail, name='detail'),
     re_path(r'(?P<top_no>\d+)/', views.detail, {}, name='detail'),
-    path(r'courses/', views.courses, name='courses')
+    path(r'courses/', views.courses, name='courses'),
+    path(r'place_order/', views.place_order, name='place_order'),
+    path(r'order_response/', views.place_order, name='place_order')
 ]
