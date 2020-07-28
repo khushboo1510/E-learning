@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 
-from django.http import HttpResponse
-
-from myapp.forms import OrderForm, InterestForm
+from django.http import HttpResponse, HttpResponseRedirect
+from myapp.forms import OrderForm, InterestForm, LoginForm
 from .models import Topic, Course, Student, Order
-
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 # Create your views here.
 def index(request):
@@ -79,3 +80,28 @@ def coursedetail(request, course_id):
         # if a GET (or any other method) we'll create a blank form
         form = InterestForm()
     return render(request, 'myapp/coursedetail.html', {'form': form, 'course': course})
+
+
+def user_login(request):
+    context = {}
+    context['form'] = LoginForm()
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('myapp:index'))
+            else:
+                return HttpResponse('Your account is disabled.')
+        else:
+            return HttpResponse('Invalid login details.')
+    else:
+        return render(request, 'myapp/login.html', context)
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse(('myapp:index')))
