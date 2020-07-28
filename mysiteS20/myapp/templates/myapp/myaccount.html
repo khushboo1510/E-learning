@@ -1,0 +1,21 @@
+{% extends 'myapp/base.html' %}
+{% block title %}Main{% endblock %}
+{% block myhdg %}{{ request.user }}{% endblock %}
+{% block body_block %}
+    <h3>First Name: {{ first_name }} </h3>
+    <h3>Last Name: {{ last_name }}</h3>
+    <h3>Courses Ordered:</h3>
+    <ol>
+        {% for i in ordered_course %}
+            <li> {{ i }} </li>
+        {% endfor %}
+    </ol>
+
+    <h3>Topics Interested In:</h3>
+    <ol>
+        {% for interest in interested %}
+            <li> {{ interest }} </li>
+        {% endfor %}
+    </ol>
+
+{% endblock %}

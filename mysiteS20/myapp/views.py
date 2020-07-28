@@ -105,3 +105,21 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse(('myapp:index')))
+
+
+def myaccount(request):
+    if request.user.is_authenticated:
+        current_user = request.user
+
+        if Student.objects.filter(pk=current_user.id):
+            first_name = current_user.first_name
+            last_name = current_user.last_name
+            ordered_course = Order.objects.filter(student_id=current_user.id).values_list('course__name', flat=True)
+            interested = Student.objects.filter(id=current_user.id).values_list('interested_in__courses__name', flat=True)
+            return render(request, 'myapp/myaccount.html',
+                          {'ordered_course': ordered_course, 'first_name': first_name, 'last_name': last_name,
+                           'interested': interested})
+        else:
+            return HttpResponse('You are not a registered student!')
+    else:
+        return user_login(request)
