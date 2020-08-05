@@ -2,6 +2,7 @@
 {% block title %}Main{% endblock %}
 {% block myhdg %}{{ request.user }}{% endblock %}
 {% block body_block %}
+    <h3>Your last login time is : {{last_login}}</h3>
     {% if top_list %}
         <h2>List of Topics</h2>
         <ol>

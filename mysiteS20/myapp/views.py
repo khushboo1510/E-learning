@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render, get_object_or_404
 
 from django.http import HttpResponse, HttpResponseRedirect
@@ -11,7 +13,8 @@ from django.urls import reverse
 def index(request):
     # top_list = Topic.objects.all().order_by('id')[:10]
     top_list = Topic.objects.all().order_by('id')[:10]
-    return render(request, "myapp/index.html", {'top_list': top_list})
+    last_login = request.session['last_login'] if 'last_login' in request.session else 'Your last login was more than one hour ago'
+    return render(request, "myapp/index.html", {'top_list': top_list, 'last_login': last_login})
 
 
 def about(request):
@@ -97,6 +100,8 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
+                request.session['last_login'] = str(datetime.datetime.now())
+                # request.session.set_expiry(3600)
                 return HttpResponseRedirect(reverse('myapp:index'))
             else:
                 return HttpResponse('Your account is disabled.')
@@ -108,7 +113,8 @@ def user_login(request):
 
 @login_required
 def user_logout(request):
-    logout(request)
+    request.session.clear()
+    #logout(request)
     return HttpResponseRedirect(reverse('myapp:index'))
 
 
