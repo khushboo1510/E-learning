@@ -18,7 +18,12 @@ def about(request):
     # response = HttpResponse()
     # para = '<p>' + 'This is an E-learning Website! Search our Topics to find all available Courses.' + '</p>'
     # response.write(para)
-    return render(request, "myapp/about.html")
+    if 'about_visits' in request.session:
+        request.session['about_visits'] += 1
+        request.session.set_expiry(300)
+    else:
+        request.session['about_visits'] = 1
+    return render(request, "myapp/about.html", {'number_of_visits': request.session['about_visits']})
 
 
 def detail(request, top_no):
