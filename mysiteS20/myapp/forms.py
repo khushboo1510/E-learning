@@ -1,5 +1,8 @@
 from django import forms
-from myapp.models import Order
+from django.contrib.auth.forms import UserCreationForm
+from django.forms import CheckboxSelectMultiple, PasswordInput
+from myapp.models import Order, Student
+from passlib.ifc import PasswordHash
 
 
 class OrderForm(forms.ModelForm):
@@ -26,3 +29,24 @@ class InterestForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput())
+
+
+class RegisterForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+        # do not require password confirmation
+        del self.fields['password2']
+
+    class Meta:
+        model = Student
+        fields = ['username', 'first_name', 'last_name', 'city', 'interested_in']
+
+        widgets = {
+            'interested_in': forms.CheckboxSelectMultiple,
+        }
+
+        labels = {
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'interested_in': 'Interested In'
+        }

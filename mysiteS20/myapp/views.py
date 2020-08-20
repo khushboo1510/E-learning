@@ -1,9 +1,9 @@
 import datetime
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 
 from django.http import HttpResponse, HttpResponseRedirect
-from myapp.forms import OrderForm, InterestForm, LoginForm
+from myapp.forms import OrderForm, InterestForm, LoginForm, RegisterForm
 from .models import Topic, Course, Student, Order
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -134,3 +134,14 @@ def myaccount(request):
             return HttpResponse('You are not a registered student!')
     else:
         return user_login(request)
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('myapp:login')
+
+    form = RegisterForm()
+    return render(request, 'myapp/register.html', {'form': form})
