@@ -7,7 +7,6 @@ from import_export.admin import ImportExportModelAdmin
 # Register your models here.
 admin.site.register(Topic)
 admin.site.register(Order)
-admin.site.register(Student)
 
 
 def add_50_to_hours(modeladmin, request, queryset):
@@ -28,4 +27,15 @@ class CourseAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Course, CourseAdmin)
+
+
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ["first_name", "last_name", "upper_case_name", "city"]
+
+    def upper_case_name(self, obj):
+        return (obj.first_name + " " + obj.last_name).upper()
+    upper_case_name.short_description = "Student Full Name"
+
+
+admin.site.register(Student, StudentAdmin)
 
