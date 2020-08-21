@@ -103,8 +103,8 @@ def user_login(request):
                 login(request, user)
                 request.session['last_login'] = str(datetime.datetime.now())
                 # request.session.set_expiry(3600)
-                if 'next' in request.GET:
-                    return redirect('myapp:' + request.GET.get('next'))
+                if 'next' in request.POST:
+                    return redirect('myapp:' + request.POST.get('next'))
                 return HttpResponseRedirect(reverse('myapp:index'))
             else:
                 return HttpResponse('Your account is disabled.')
