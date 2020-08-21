@@ -13,6 +13,14 @@
 <hr/>
 <div>
     <ul>
+        {% if request.user.is_authenticated %}
+            <li ><a href="{% url 'myapp:logout' %}">Logout</a></li>
+            <li ><a href="{% url 'myapp:myaccount' %}">My Account</a></li>
+        {% else %}
+            <li ><a href="{% url 'myapp:login' %}">Login</a></li>
+            <li ><a href="{% url 'myapp:register' %}">Register <Here></Here></a></li>
+        {% endif %}
+        <p></p>
         <li class="hbar1"><a href="{% url 'myapp:about' %}">Find out about our ELearning site</a></li>
         <li class="hbar1"><a href="{% url 'myapp:index' %}">Click here to
             return to main page</a><br/></li>
