@@ -1,4 +1,5 @@
 import datetime
+from urllib.parse import urlencode
 
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -102,6 +103,8 @@ def user_login(request):
                 login(request, user)
                 request.session['last_login'] = str(datetime.datetime.now())
                 # request.session.set_expiry(3600)
+                if 'next' in request.GET:
+                    return redirect('myapp:' + request.GET.get('next'))
                 return HttpResponseRedirect(reverse('myapp:index'))
             else:
                 return HttpResponse('Your account is disabled.')
@@ -133,7 +136,10 @@ def myaccount(request):
         else:
             return HttpResponse('You are not a registered student!')
     else:
-        return user_login(request)
+        base_url = reverse('myapp:login')
+        query_string = urlencode({'next': 'myaccount'})
+        url = '{}?{}'.format(base_url, query_string)
+        return redirect(url)
 
 
 def register(request):
