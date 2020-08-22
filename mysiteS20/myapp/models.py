@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db import models
 import datetime
@@ -16,10 +17,16 @@ class Topic(models.Model):
                '; Category: ' + self.category + ' }'
 
 
+def validate_limit(value):
+    if not 100 <= value <= 200:
+        raise ValidationError(('Please enter value between 100 and 200 , %(value)  is not in the defined range '),
+                              params={'value': value}, )
+
+
 class Course(models.Model):
     topic = models.ForeignKey(Topic, related_name='courses', on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_limit])
     hours = models.DecimalField(max_digits=10, decimal_places=2, default=1)
     for_everyone = models.BooleanField(default=True)
     description = models.TextField(max_length=300, null=True, blank=True)
