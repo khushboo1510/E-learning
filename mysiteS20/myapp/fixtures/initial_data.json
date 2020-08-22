@@ -1,0 +1,10 @@
+[
+  {
+    "model": "myapp.Topic",
+    "fields": {
+
+      "name": "abc",
+      "category": "xyz"
+    }
+  }
+]
