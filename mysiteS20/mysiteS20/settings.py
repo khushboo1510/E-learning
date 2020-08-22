@@ -24,6 +24,12 @@ SECRET_KEY = '_^=b)1l#(!l&t9ct*k5c8uaybhhij!*!yn505n!dq@7*l31s(u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' # mail service smtp
+EMAIL_HOST_USER = 'rishish98@gmail.com' # email id
+EMAIL_HOST_PASSWORD = 'Chtz24328' #password
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 ALLOWED_HOSTS = []
 
@@ -39,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp.apps.MyappConfig',
     'import_export',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
